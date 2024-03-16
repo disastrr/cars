@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="static/script.js"></script>
+    <title>CAR MODELS</title>
+</head>
+<body>
+    <ul id="object">
+        <li class="left"><span class="text h1"><b>CAR MODELS</b></span></li>
+        <li class="left"><a class="text h2" href="/"><b>HOME</b></a></li>
+        <li id="compare" class="left input h2"><button id="compareButton" class="text" href="/" onclick="hideUnselected()"><b>COMPARE</b></button></li>
+        <li class="input">
+            <div class="right" id="searchbar">
+                <input autofocus required type="text" id="searchInput" placeholder="Search...">
+            </div>
+        </li>
+    </ul>
+    <form>
+        <div class="user-cards">
+            {{range .CarModels}}
+            <div class="card" data-manufacturer-id="{{.ManufacturerID}}">
+                <input type="checkbox" id="{{.ID}}" name="{{.Name}}" value="{{.ID}}">
+                <div class="body">
+                    <img src="/api/images/{{.Image}}" alt="{{.Name}}" width="300">
+                </div>
+                <div id="text" class="body modelName"><b>{{.Name}}</b></div>
+                <div class="body dropdown">
+                    <span class="manufacturerName"><em>{{index $.ManufacturerNames .ManufacturerID}}</em></span>
+                    <div class="dropdown-content"> 
+                        <p>Country: {{index $.ManufacturerCountry .ManufacturerID}}</p>
+                        <p>Founding Year: {{index $.ManufacturerFoundingYear .ManufacturerID}}</p>
+                    </div>
+                </div>
+                <div class="body category">{{index $.CategoryMap .CategoryID}}</div>
+                <div class="body year">{{.Year}}</div>
+                <div id="button" class="body">
+                    <button type="button" class="collapsible"><b>SPECIFICATIONS</b></button>
+                    <div class="content">
+                        <p>
+                            <b>Engine:</b> {{.Specifications.Engine}}<br>
+                            <b>Horsepower:</b> {{.Specifications.Horsepower}}<br>
+                            <b>Transmission:</b> {{.Specifications.Transmission}}<br>
+                            <b>Drivetrain:</b> {{.Specifications.Drivetrain}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </form>
+</body>
+</html>
